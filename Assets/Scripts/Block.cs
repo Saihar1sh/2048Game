@@ -9,11 +9,26 @@ public class Block : MonoBehaviour
     NumBlock occupiedBlock;
     bool isOccupied = false;
 
+    //neighbours
+    Block upperBlock;
+    Block lowerBlock;
+    Block leftBlock;
+    Block rightBlock;
+
     public void Init(Vector2Int _index)
     {
         index = _index;
 
     }
+
+    public void AssignNeighbours(Block _upperBlock,Block _lowerBlock,Block _leftBlock,Block _rightBlock)
+    {
+        upperBlock = _upperBlock;
+        lowerBlock = _lowerBlock;
+        leftBlock  = _leftBlock;
+        rightBlock = _rightBlock;
+    }
+
     public void OccupyThisBlock(NumBlock numBlock)
     {
         occupiedBlock = numBlock;
