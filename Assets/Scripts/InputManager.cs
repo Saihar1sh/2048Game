@@ -15,12 +15,10 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        inputValues = SwipeInputValues.Null;
+        //inputValues = SwipeInputValues.Null;
 
         Inputs();
         CalculateSwipeDistance();
-        if (inputValues != SwipeInputValues.Null)
-            Debug.Log(inputValues);
     }
 
     private void Inputs()       //PC and Touch inputs -- Dragging
@@ -33,7 +31,7 @@ public class InputManager : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            Reset();
+            SwipeEnd();
         }
         #endregion
 
@@ -47,16 +45,26 @@ public class InputManager : MonoBehaviour
             }
             else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
             {
-                Reset();
+                SwipeEnd();
             }
         }
         #endregion
+    }
+
+    private void SwipeEnd()
+    {
+        if (inputValues != SwipeInputValues.Null)
+            EventsService.Instance.InvokeOnInputDirectionEvent(inputValues);
+        Reset();
     }
 
     private void Reset()        //Resetting the swipe distance
     {
         startTouch = swipeDelta = Vector2.zero;
         isDragging = false;
+        Debug.Log(inputValues);
+        inputValues = SwipeInputValues.Null;
+
     }
     private void CalculateSwipeDistance()
     {
@@ -91,6 +99,7 @@ public class InputManager : MonoBehaviour
 
             }
         }
+
     }
 
 

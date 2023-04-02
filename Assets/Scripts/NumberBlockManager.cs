@@ -12,19 +12,18 @@ public class NumberBlockManager : MonoBehaviour
 
     float[] cummulativeProbabilities = new float[4];
 
-    List<int> spawnNumberBlockValues = new List<int>(4);
+    List<int> spawnNumberBlockValues = new List<int>(4) { 2, 4, 8, 16};
+
+    List<NumBlock> numBlocksCreated = new List<NumBlock>();
 
     private void Awake()
     {
         SetCummulativeProbabilityValues();
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        spawnNumberBlockValues.Add(2);
-        spawnNumberBlockValues.Add(4);
-        spawnNumberBlockValues.Add(8);
-        spawnNumberBlockValues.Add(16);
 
     }
 
@@ -45,6 +44,7 @@ public class NumberBlockManager : MonoBehaviour
         return null;
     }
 
+
     private void SetCummulativeProbabilityValues()
     {
         float cummulativeValue = 0;
@@ -59,6 +59,7 @@ public class NumberBlockManager : MonoBehaviour
     {
         NumBlock numBlock = Instantiate(numBlockPrefab);
         numBlock.Init(numValue);
+        numBlocksCreated.Add(numBlock);
         return numBlock;
     }
 
