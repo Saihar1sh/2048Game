@@ -6,7 +6,6 @@ public class NumberBlockManager : MonoBehaviour
 {
     [SerializeField] NumBlock numBlockPrefab;
 
-    [SerializeField] GridManager gridManager;
 
     float[] probabilities = { 0.5f, 0.25f, 0.15f, 0.1f };
 
@@ -58,7 +57,7 @@ public class NumberBlockManager : MonoBehaviour
     NumBlock CreateNumberBlock(int numValue)
     {
         NumBlock numBlock = Instantiate(numBlockPrefab);
-        numBlock.Init(numValue);
+        //numBlock.Init(numValue);
         numBlocksCreated.Add(numBlock);
         return numBlock;
     }

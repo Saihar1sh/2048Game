@@ -5,7 +5,7 @@ public class InputManager : MonoBehaviour
     private bool isDragging = false;
     private Vector2 startTouch, swipeDelta;
 
-    private SwipeInputValues inputValues;
+    private SwipeInputValues inputValues, keyboardInputs;
 
     //Properties
     public bool IsDragging { get { return isDragging; } }
@@ -24,6 +24,9 @@ public class InputManager : MonoBehaviour
     private void Inputs()       //PC and Touch inputs -- Dragging
     {
         #region PC Inputs
+
+        KeyboardInputs();
+
         if (Input.GetMouseButtonDown(0))
         {
             isDragging = true;
@@ -49,6 +52,20 @@ public class InputManager : MonoBehaviour
             }
         }
         #endregion
+    }
+
+    private void KeyboardInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow)) keyboardInputs = SwipeInputValues.SwipeUp;
+        if (Input.GetKeyDown(KeyCode.DownArrow)) keyboardInputs = SwipeInputValues.SwipeDown;
+        if (Input.GetKeyDown(KeyCode.RightArrow)) keyboardInputs = SwipeInputValues.SwipeRight;
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) keyboardInputs = SwipeInputValues.SwipeLeft;
+
+        if (keyboardInputs != SwipeInputValues.Null)
+            EventsService.Instance.InvokeOnInputDirectionEvent(keyboardInputs);
+
+        //resetting value 
+        keyboardInputs = SwipeInputValues.Null;
     }
 
     private void SwipeEnd()

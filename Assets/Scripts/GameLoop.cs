@@ -1,3 +1,4 @@
+using Game.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,6 @@ public class GameLoop : LazySingleton<GameLoop>
 
     [SerializeField] NumberBlockManager numberBlockManager;
 
-    [SerializeField] GridManager gridManager;
-
     protected override void Awake()
     {
         base.Awake();
@@ -23,8 +22,8 @@ public class GameLoop : LazySingleton<GameLoop>
     {
         EventsService.Instance.AddSubscribersToOnInputDirectionEvent(MoveBlocksToInputDirection);
 
-        gridManager.SetupGrid(gridSize);
-        StartGame();
+        //.SetupGrid(gridSize);
+        //StartGame();
     }
     private void StartGame()
     {
@@ -33,8 +32,8 @@ public class GameLoop : LazySingleton<GameLoop>
             NumBlock numBlock = numberBlockManager.CreateNumberBlockAccordingToProbability();
             if (numBlock)
             {
-                Block block = gridManager.GetRandomUnOccupiedBlock();
-                block.OccupyThisBlock(numBlock);
+                //Block block = gridManager.GetRandomUnOccupiedBlock();
+               // block.OccupyThisBlock(numBlock);
 
             }
             else
@@ -67,12 +66,18 @@ public class GameLoop : LazySingleton<GameLoop>
 
         if (dir == Direction.none)
             return;
-
-        gridManager.MoveTo(dir);
+        Debug.Log("gameLoop dir:" + dir);
+        Board.Instance.MoveTo(dir);
+    }
+    private void Update()
+    {
+        Board.Instance.UpdateState();
+        
     }
     protected override void OnDestroy()
     {
         base.OnDestroy();
+        if(EventsService.Instance)
         EventsService.Instance.RemoveSubscribersToOnBlockOccupiedEvent(MoveBlocksToInputDirection);
 
     }

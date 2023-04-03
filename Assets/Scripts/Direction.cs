@@ -1,8 +1,11 @@
-public enum Direction
+namespace Game.Core
 {
-    left,
-    right,
-    up,
-    down,
-    none    //just for initialization
+    public enum Direction
+    {
+        left,
+        right,
+        up,
+        down,
+        none    //just for initialization
+    }
 }
